@@ -1,0 +1,58 @@
+# Definir una lista de destinos disponibles
+destinos = ['bogota', 'popayan', 'cali', 'Manizales']
+
+# Función para expedir el boleto
+def expedir_boleto(destino, tarjeta_credito, identificacion_personal):
+    # Verificar si el destino seleccionado es válido
+    if destino in destinos:
+        # Validar la tarjeta de crédito y la identificación personal
+        if validar_tarjeta_credito(tarjeta_credito) and validar_identificacion_personal(identificacion_personal):
+            # Realizar la transacción de la tarjeta de crédito
+            realizar_transaccion(tarjeta_credito)
+            # Imprimir el boleto de tren
+            imprimir_boleto(destino)
+            print("¡Boleto expedido exitosamente!")
+        else:
+            print("Tarjeta de crédito o  identificación personal inválida. No se puede expedir el boleto.")
+    else:
+        print("Destino inválido. Por favor, seleccione un destino válido.")
+
+# Función para validar la tarjeta de crédito
+def validar_tarjeta_credito(tarjeta_credito):
+    # Aquí iría la lógica de validación de la tarjeta de crédito
+    # Por simplicidad, esta función siempre retorna True en este ejemplo
+    return True
+
+# Función para validar la identificación personal
+def validar_identificacion_personal(identificacion_personal):
+    # Aquí iría la lógica de validación de la identificación personal
+    # Por simplicidad, esta función siempre retorna True en este ejemplo
+    return True
+
+# Función para realizar la transacción de la tarjeta de crédito
+def realizar_transaccion(tarjeta_credito):
+    # Aquí iría la lógica para realizar la transacción de la tarjeta de crédito
+    # Por simplicidad, esta función no realiza ninguna acción en este ejemplo
+    pass
+
+# Función para imprimir el boleto de tren
+def imprimir_boleto(destino):
+    print("*******************************")
+    print("Tren a", destino)
+    print("Fecha: 18 de Agosto, 2023")
+    print("*******************************")
+
+# Menú principal
+def menu_seleccion_destino():
+    print("Bienvenido al sistema de expedición de boletos de tren")
+    print("Por favor, seleccione su destino:")
+    for i, destino in enumerate(destinos):
+        print(f"{i+1}. {destino}")
+    seleccion = int(input("Ingrese el número de destino: "))
+    destino_seleccionado = destinos[seleccion-1]
+    identificacion_personal = input("Ingrese su número de identificación personal: ")
+    tarjeta_credito = input("Ingrese el número de su tarjeta de crédito: ")
+    expedir_boleto(destino_seleccionado, tarjeta_credito, identificacion_personal)
+
+# Ejecutar el programa
+menu_seleccion_destino()
