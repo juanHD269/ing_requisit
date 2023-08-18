@@ -1,0 +1,68 @@
+class Cliente:
+    def _init_(self, nombre_usuario, informacion_tarjeta_credito):
+        self.nombre_usuario = nombre_usuario
+        self.informacion_tarjeta_credito = informacion_tarjeta_credito
+        self.puntos = 0
+
+class Producto:
+    def _init_(self, nombre, precio):
+        self.nombre = nombre
+        self.precio = precio
+
+class Tienda:
+    def _init_(self):
+        self.clientes = {}
+        self.productos = []
+
+    def crear_cliente(self, nombre_usuario, informacion_tarjeta_credito):
+        if nombre_usuario not in self.clientes:
+            self.clientes[nombre_usuario] = Cliente(nombre_usuario, informacion_tarjeta_credito)
+            print(f"Cliente {nombre_usuario} creado.")
+
+    def agregar_producto(self, producto):
+        self.productos.append(producto)
+        print(f"Producto {producto.nombre} está disponible en la tienda.")
+
+    def comprar(self, nombre_usuario, nombre_producto):
+        if nombre_usuario in self.clientes:
+            cliente = self.clientes[nombre_usuario]
+            producto = next((p for p in self.productos if p.nombre == nombre_producto), None)
+            if producto and cliente.informacion_tarjeta_credito:
+                cliente.puntos += int(producto.precio * 0.1)
+                print(f"Compra exitosa! {nombre_usuario} ahora tienes {cliente.puntos} puntos.")
+            else:
+                print("Producto inválido o falta información de tarjeta de crédito.")
+        else:
+            print("Cliente no encontrado.")
+
+    def canjear_puntos(self, nombre_usuario):
+        if nombre_usuario in self.clientes:
+            cliente = self.clientes[nombre_usuario]
+            if cliente.puntos >= 5:
+                cliente.puntos -= 5
+                print(f"¡Felicidades! {nombre_usuario} has canjeado 5 puntos por una GiftCard de 5 dólares, disponible solo en Playstore 1234-5678-9012-3456.")
+            else:
+                print(f"{nombre_usuario} No tienes suficientes puntos para canjear.")
+
+tienda = Tienda()
+
+tienda.agregar_producto(Producto("App1", 10))
+tienda.agregar_producto(Producto("App2", 15))
+tienda.agregar_producto(Producto("App3", 5))
+
+nombre_usuario = input("Ingresa tu nombre de usuario: ")
+informacion_tarjeta_credito = input("Ingresa la información de tu tarjeta de crédito: ")
+tienda.crear_cliente(nombre_usuario, informacion_tarjeta_credito)
+
+while True:
+    accion = input("Ingresa 'comprar' para comprar un producto, 'canjear' para canjear puntos, o 'salir' para salir del programa: ")
+    
+    if accion == 'salir':
+        break
+    elif accion == 'comprar':
+        nombre_producto = input("Ingresa el nombre del producto que deseas comprar: ")
+        tienda.comprar(nombre_usuario, nombre_producto)
+    elif accion == 'canjear':
+        tienda.canjear_puntos(nombre_usuario)
+    else:
+        print("Acción inválida. Por favor ingresa 'comprar', 'canjear', o 'salir'.")
